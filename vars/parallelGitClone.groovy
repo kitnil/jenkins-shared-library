@@ -22,6 +22,11 @@ def call(Map args = [:]) {
                 } else {
                     sh "git clone ${args.url} ${args.dir}"
                 }
+                dir(args.dir) {
+                    sh "git fetch origin"
+                    sh "git checkout master"
+                    sh "git reset --hard origin/master"
+                }
             }
         }
     }
