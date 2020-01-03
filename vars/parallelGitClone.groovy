@@ -11,6 +11,9 @@ def call(Map args = [:]) {
     assert args.dir: "No directory provided"
     assert args.url: "No URL provided"
 
+    def branch = args.branch ?: "master"
+    def remote = args.remote ?: "origin"
+
     def nodes = [:]
     def names = getNodeNames(args.nodeLabels)
     for (int i=0; i<names.size(); ++i) {
@@ -23,9 +26,9 @@ def call(Map args = [:]) {
                     sh "git clone ${args.url} ${args.dir}"
                 }
                 dir(args.dir) {
-                    sh "git fetch origin"
-                    sh "git checkout master"
-                    sh "git reset --hard origin/master"
+                    sh "git fetch ${remote}"
+                    sh "git checkout ${branch}"
+                    sh "git reset --hard ${remote}/${branch}"
                 }
             }
         }
