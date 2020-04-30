@@ -23,9 +23,7 @@ def call(Map args = [:]) {
             "/home/$it/Downloads",
             "/home/$it/GNS3",
             "/home/$it/Videos",
-            "/home/$it/archive",
             "/home/$it/majordomo",
-            "/home/$it/src",
             "/home/$it/vm"
         ]
     }.inject([]) {head, tail -> head + tail}
