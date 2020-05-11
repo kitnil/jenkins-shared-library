@@ -1,10 +1,3 @@
-@NonCPS
-def getNodeNames(List<String> labels) {
-    jenkins.model.Jenkins.instance.nodes
-            .findAll { node -> labels.contains(node.labelString) }
-            .collect { node -> node.name }
-}
-
 def call(Map args = [:]) {
     assert args.cmd: "No command provided"
     assert args.nodeLabels : "No node labels provided"
