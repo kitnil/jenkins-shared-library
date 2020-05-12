@@ -4,4 +4,5 @@ public class Constants {
     public static final String homeDir = "/home/oleg"
     public static final String gitGuixUrl = "https://cgit.duckdns.org/git/guix/guix"
     public static final String githubOrganization = "kitnil"
+    public static final String masterLabel = "guixsd"
 }
