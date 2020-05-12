@@ -21,7 +21,7 @@ def call(Map args = [:]) {
                 dir(args.dir) {
                     sh "git fetch ${remote}"
                     sh "git checkout ${branch}"
-                    sh "git reset --hard ${remote}/${branch}"
+                    sh "git pull --rebase ${remote} ${branch}"
                 }
             }
         }
