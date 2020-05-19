@@ -1,9 +1,18 @@
-def build(String pack) {
-    sh "./guix-jenkins/bin/guix package --show=${pack}"
-    try {
-        sh "./guix-jenkins/bin/guix build --no-grafts ${pack}"
-    } catch (Exception error) {
-        echo "Stage failed, but we still continue"
-        slackSend color: '#1E90FF', message: "${pack} build failed"
-    }
+def build(Map args = [:]) {
+    List<String> BUILD_PACKAGES = [
+        "help2man",
+        "guile-sqlite3",
+        "guile-gcrypt"
+    ]
+    List<String> BUILD_SCRIPTS = [
+        'make --jobs=$(nproc)',
+        '(set -e -x; ./bootstrap; ./configure --localstatedir=/var --prefix=; make --jobs=$(nproc))',
+        '(set -e -x; make clean-go; ./bootstrap; ./configure --localstatedir=/var --prefix=; make --jobs=$(nproc))'
+    ]
+    String BUILD_COMMAND = """
+        guix environment --pure guix --ad-hoc ${BUILD_PACKAGES.join(' ')} \
+          -- sh -c "${BUILD_SCRIPTS.join(' || ')}"
+    """
+    gitFetch (branch: args.branch, url: Constants.gitGuixUrl, dir: args.dir)
+    dir(args.dir) { sh BUILD_COMMAND }
 }
