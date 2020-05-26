@@ -13,6 +13,5 @@ def build(Map args = [:]) {
         guix environment --pure guix --ad-hoc ${BUILD_PACKAGES.join(' ')} \
           -- sh -c "${BUILD_SCRIPTS.join(' || ')}"
     """
-    gitFetch (branch: args.branch, url: Constants.gitGuixUrl, dir: args.dir)
-    dir(args.dir) { sh BUILD_COMMAND }
+    sh BUILD_COMMAND
 }
