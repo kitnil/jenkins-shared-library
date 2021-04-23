@@ -12,7 +12,7 @@ def call(Map args = [:]) {
         sh """
             git fetch ${remote}
             git checkout ${branch} || true # true if is already checked
-            git pull --rebase ${remote} ${branch}
+            git pull ${remote} ${branch} --rebase
         """
     }
 }
